@@ -39,7 +39,7 @@
 
   &::after {
     content: '';
-    background-color: #e2e2e2;
+    background-color: var(--color-background);
     top: 0;
     left: 0;
     height: 100%;

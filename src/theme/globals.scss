@@ -1,9 +1,12 @@
 :root {
   --cursor: pointer;
+
+  --color-background: #e2e2e2;
+  --color-primary: #1e1b18;
 }
 
 body {
-  background-color: #e2e2e2;
+  background-color: var(--color-background);
 }
 
 body {
