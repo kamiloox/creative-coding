@@ -1,8 +1,12 @@
+@use 'easings.scss' as *;
+
 :root {
   --cursor: pointer;
 
   --color-background: #e2e2e2;
   --color-primary: #1e1b18;
+
+  @extend %easings;
 }
 
 body {

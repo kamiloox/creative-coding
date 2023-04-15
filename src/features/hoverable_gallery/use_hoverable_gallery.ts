@@ -4,6 +4,7 @@ import { useMousePosition } from 'hooks/use_mouse_position';
 import { lerp } from 'utils/animation';
 import { useRequestAnimationFrame } from 'hooks/use_request_animation_frame';
 import { Position2D } from 'utils/position';
+import { isClient } from 'utils/client';
 
 export const useHoverableGallery = () => {
   const hoveredCardRef = useRef<HTMLLIElement | null>(null);
@@ -12,18 +13,18 @@ export const useHoverableGallery = () => {
 
   const { getPosition } = useMousePosition();
 
-  const handleMouseEnter = (event: MouseEvent<HTMLLIElement>) => {
+  const handleMouseEnter = useCallback((event: MouseEvent<HTMLLIElement>) => {
     hoveredCardRef.current = event.currentTarget;
 
     setCursorHidden(true);
-  };
+  }, []);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     hoveredCardRef.current = null;
     prevMousePos.current = null;
 
     setCursorHidden(false);
-  };
+  }, []);
 
   const updateClippedMask = useCallback(() => {
     if (!hoveredCardRef.current) {
@@ -54,5 +55,9 @@ export const useHoverableGallery = () => {
 
   useRequestAnimationFrame(updateClippedMask);
 
-  return { handleMouseEnter, handleMouseLeave, hoveredCardRef, cursorHidden };
+  const hoveredCardIndex = isClient()
+    ? Number(hoveredCardRef.current?.style.getPropertyValue('--index'))
+    : undefined;
+
+  return { handleMouseEnter, handleMouseLeave, hoveredCardIndex, cursorHidden };
 };

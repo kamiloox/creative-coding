@@ -5,7 +5,7 @@ import { smilingWomanImage, cherryBlossomImage, fashionManImage } from 'assets/i
 import { VisuallyHidden } from 'components/visually_hidden';
 
 import styles from './hoverable_gallery.module.scss';
-import { CustomCursor } from './custom_cursor/custom_cursor';
+import { CustomCursor } from 'components/custom_cursor/custom_cursor';
 import { useHoverableGallery } from './use_hoverable_gallery';
 
 const images = [smilingWomanImage, cherryBlossomImage, fashionManImage];
@@ -15,7 +15,7 @@ const HOVERABLE_GALLERY_ID = 'hoverable-gallery';
 // Inspired by https://malvah.co/
 
 export const HoverableGallery = () => {
-  const { cursorHidden, hoveredCardRef, handleMouseEnter, handleMouseLeave } =
+  const { cursorHidden, hoveredCardIndex, handleMouseEnter, handleMouseLeave } =
     useHoverableGallery();
 
   return (
@@ -25,11 +25,9 @@ export const HoverableGallery = () => {
         <VisuallyHidden>
           <h1 id={HOVERABLE_GALLERY_ID}>Hoverable images</h1>
         </VisuallyHidden>
-        <ul className={styles.list} style={{ '--total-count': images.length } as CSSProperties}>
+        <ul className={styles.list} style={{ '--items-count': images.length } as CSSProperties}>
           {images.map(({ id, src, alt }, index) => {
             const imageProps = { id, src, alt, priority: true, fill: true };
-
-            const currentCardIndex = hoveredCardRef.current?.style.getPropertyValue('--index');
 
             return (
               <li
@@ -44,7 +42,7 @@ export const HoverableGallery = () => {
                   className={cx(
                     styles.image,
                     styles.imageOverlay,
-                    currentCardIndex === index.toString() && styles.imageOverlayVisible,
+                    hoveredCardIndex === index && styles.imageOverlayVisible,
                   )}
                   {...imageProps}
                 />
