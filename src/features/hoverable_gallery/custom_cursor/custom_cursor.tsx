@@ -1,35 +1,21 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { cx } from 'classix';
 
 import styles from './custom_cursor.module.scss';
-import { useAnimateCursor } from './use_animate_cursor/use_animate_cursor';
-import { cx } from 'classix';
-import { useMousePositionRef } from './use_mouse_position_ref/use_mouse_position_ref';
+import { useAnimateCursor } from './use_animate_cursor';
+import { changeRootVariable } from 'utils/root_variables';
+import { isClient } from 'utils/client';
+
+if (isClient()) {
+  changeRootVariable('cursor', 'none');
+}
 
 type CustomCursorProps = {
   hidden?: boolean;
-  mousePosRef: { current: { x: number; y: number } };
 };
 
-export const CustomCursor = ({ hidden = false, mousePosRef }: CustomCursorProps) => {
-  const cursorRef = useRef<HTMLDivElement>(null);
-
-  useAnimateCursor({
-    cursorRef,
-    mousePosRef,
-    onUpdate: ({ x, y }) => {
-      if (!cursorRef.current) {
-        return;
-      }
-
-      cursorRef.current.style.setProperty('--x', `${x}px`);
-      cursorRef.current.style.setProperty('--y', `${y}px`);
-    },
-  });
-
-  useEffect(() => {
-    // https://github.com/vercel/next.js/blob/canary/errors/css-global.md
-    document.querySelector('body')?.style.setProperty('cursor', 'none');
-  }, []);
+export const CustomCursor = ({ hidden = false }: CustomCursorProps) => {
+  const cursorRef = useAnimateCursor();
 
   return (
     <div ref={cursorRef} className={cx(styles.wrapper)}>
