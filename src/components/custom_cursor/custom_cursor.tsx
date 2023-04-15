@@ -1,10 +1,9 @@
-import { useRef } from 'react';
 import { cx } from 'classix';
+import { changeRootVariable } from 'utils/root_variables';
+import { isClient } from 'utils/client';
 
 import styles from './custom_cursor.module.scss';
 import { useAnimateCursor } from './use_animate_cursor';
-import { changeRootVariable } from 'utils/root_variables';
-import { isClient } from 'utils/client';
 
 if (isClient()) {
   changeRootVariable('cursor', 'none');
