@@ -3,7 +3,7 @@ import { lerp } from 'utils/animation';
 import { useRequestAnimationFrame } from 'hooks/use_request_animation_frame';
 import { useMousePosition } from 'hooks/use_mouse_position';
 
-const DEFAULT_FACTOR = 0.08;
+const DEFAULT_FACTOR = 0.1;
 
 export const useAnimateCursor = () => {
   const cursorRef = useRef<HTMLDivElement>(null);

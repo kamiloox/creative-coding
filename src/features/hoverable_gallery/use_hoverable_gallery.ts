@@ -6,7 +6,7 @@ import { useRequestAnimationFrame } from 'hooks/use_request_animation_frame';
 import { Position2D } from 'utils/position';
 import { isClient } from 'utils/client';
 
-const DEFAULT_LERP_FACTOR = 0.08;
+const DEFAULT_FACTOR = 0.12;
 
 export const useHoverableGallery = () => {
   const hoveredCardRef = useRef<HTMLLIElement | null>(null);
@@ -44,8 +44,8 @@ export const useHoverableGallery = () => {
 
     const lerpedMousePos = prevMousePos.current
       ? {
-          x: lerp(prevMousePos.current.x, relativeMousePos.x, DEFAULT_LERP_FACTOR),
-          y: lerp(prevMousePos.current.y, relativeMousePos.y, DEFAULT_LERP_FACTOR),
+          x: lerp(prevMousePos.current.x, relativeMousePos.x, DEFAULT_FACTOR),
+          y: lerp(prevMousePos.current.y, relativeMousePos.y, DEFAULT_FACTOR),
         }
       : relativeMousePos;
 
